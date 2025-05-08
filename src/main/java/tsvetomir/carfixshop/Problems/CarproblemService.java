@@ -32,6 +32,10 @@ public class CarproblemService {
         carproblemRepository.save(carproblem);
     }
 
+    public void addAllNewCarProblems(List<Carproblem> problems){
+        carproblemRepository.saveAll(problems);
+    }
+
     public void deleteCarProblem(Integer id) {
         if (!carproblemRepository.existsById(id)) {
             throw new IllegalStateException("Problem with ID " + id + " doesn't exist.");

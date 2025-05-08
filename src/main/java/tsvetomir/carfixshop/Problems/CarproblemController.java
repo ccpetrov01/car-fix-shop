@@ -28,6 +28,12 @@ public class CarproblemController {
         carproblemService.addNewCarProblem(carproblem);
     }
 
+    @PostMapping("/addAll")
+    public void addAllNewCarProblems(@RequestBody @Valid List<CarproblemDto> carproblemDto){
+        List<Carproblem> carproblem = carproblemMapper.toCarproblemDtoList(carproblemDto);
+        carproblemService.addAllNewCarProblems(carproblem);
+    }
+
 
     @GetMapping("/problems")
     public List<CarproblemViewDto> getAllCarsProblems() {
@@ -49,7 +55,7 @@ public class CarproblemController {
          carproblemService.deleteCarProblem(id);
     }
 
-    @GetMapping("/{price}")
+    @GetMapping("/price/{price}")
     public List<CarproblemViewDto> findByPartsPriceOrderedByPriceAscNative(@PathVariable @Valid Integer price){
         return carproblemService.findByPartsPriceOrderedByPriceAscNative(price)
                 .stream()
@@ -57,7 +63,7 @@ public class CarproblemController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("{description}")
+    @GetMapping("/description/{description}")
     public List<CarproblemViewDto> findByDescription(@PathVariable @Valid String description){
         return carproblemService.findByDescription(description)
                 .stream()
