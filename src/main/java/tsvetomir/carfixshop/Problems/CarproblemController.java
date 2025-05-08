@@ -50,8 +50,16 @@ public class CarproblemController {
     }
 
     @GetMapping("/{price}")
-    public List<CarproblemViewDto> findByPartsPriceOrderedByPriceAscNative(@PathVariable Integer price){
+    public List<CarproblemViewDto> findByPartsPriceOrderedByPriceAscNative(@PathVariable @Valid Integer price){
         return carproblemService.findByPartsPriceOrderedByPriceAscNative(price)
+                .stream()
+                .map(carproblemMapper::carproblemViewDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("{description}")
+    public List<CarproblemViewDto> findByDescription(@PathVariable @Valid String description){
+        return carproblemService.findByDescription(description)
                 .stream()
                 .map(carproblemMapper::carproblemViewDto)
                 .collect(Collectors.toList());

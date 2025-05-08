@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @ControllerAdvice
@@ -40,5 +41,13 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleTransactionSystemException(TransactionSystemException ex) {
         String message = "There was an issue saving your data. Make sure all required fields are filled.";
         return ResponseEntity.badRequest().body(message);
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<String> handleNoSuchElementException(NoSuchElementException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+
     }
 }
