@@ -38,5 +38,9 @@ public class CarproblemService {
         carproblemRepository.deleteById(id);
     }
 
+    public List<Carproblem> findByPartsPriceOrderedByPriceAscNative(Integer price){
+        return carproblemRepository.findByPartsPriceOrderedByPriceAscNative(price);
+    }
+
 
 }

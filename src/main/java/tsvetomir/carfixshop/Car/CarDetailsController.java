@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/car-details")
 public class CarDetailsController {
     private final CarDetailsMapper carDetailsMapper;
     private final CarDetailsService carDetailsService;
@@ -17,7 +18,7 @@ public class CarDetailsController {
         this.carDetailsService = carDetailsService;
     }
 
-    @PostMapping("/car-details/add")
+    @PostMapping("/add")
     public void addNewCarDetail(@RequestBody @Valid CarDetailsDto carDetailsDto)
     {
         CarDetails cardetails = carDetailsMapper.toCarDetailsDto(carDetailsDto);
@@ -25,7 +26,7 @@ public class CarDetailsController {
     }
 
 
-    @GetMapping("/car-details/getDetail")
+    @GetMapping("/getDetail")
     public List<CarDetailsViewDto> getAllCarDetails() {
 
         return carDetailsService.getAllCarDetails()
@@ -35,13 +36,13 @@ public class CarDetailsController {
     }
 
 
-    @GetMapping("/car-details/{id}")
-    public CarDetailsViewDto findCarDetailsById(@PathVariable Integer id){
+    @GetMapping("/{id}")
+    public CarDetailsViewDto findCarDetailsById(@PathVariable @Valid Integer id){
         return carDetailsMapper.carDetailsViewDto(carDetailsService.findCarDetailsById(id));
     }
 
-    @DeleteMapping("/car-details/{id}")
-    public void deleteCarDetails(@PathVariable Integer id){
+    @DeleteMapping("/{id}")
+    public void deleteCarDetails(@PathVariable @Valid Integer id){
         carDetailsService.deleteCarDetails(id);
     }
 }

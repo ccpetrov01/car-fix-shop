@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/car-problem")
 public class CarproblemController {
 
 
@@ -20,7 +21,7 @@ public class CarproblemController {
     }
 
 
-    @PostMapping("/car-problem/add")
+    @PostMapping("/add")
     public void addNewCarProblem(@RequestBody @Valid CarproblemDto carproblemDto)
     {
         Carproblem carproblem = carproblemMapper.toCarproblemDto(carproblemDto);
@@ -28,7 +29,7 @@ public class CarproblemController {
     }
 
 
-    @GetMapping("/car-problem/problems")
+    @GetMapping("/problems")
     public List<CarproblemViewDto> getAllCarsProblems() {
 
         return carproblemService.getAllCarsProblems()
@@ -38,13 +39,21 @@ public class CarproblemController {
     }
 
 
-    @GetMapping("/car-problem/{id}")
-    public CarproblemViewDto findCarProblemById(@PathVariable Integer id){
+    @GetMapping("/{id}")
+    public CarproblemViewDto findCarProblemById(@PathVariable @Valid Integer id){
         return carproblemMapper.carproblemViewDto(carproblemService.findCarProblemById(id));
     }
 
-    @DeleteMapping("/car-problem/{id}")
-    public void deleteCarProblem(@PathVariable Integer id){
+    @DeleteMapping("/{id}")
+    public void deleteCarProblem(@PathVariable @Valid Integer id){
          carproblemService.deleteCarProblem(id);
+    }
+
+    @GetMapping("/{price}")
+    public List<CarproblemViewDto> findByPartsPriceOrderedByPriceAscNative(@PathVariable Integer price){
+        return carproblemService.findByPartsPriceOrderedByPriceAscNative(price)
+                .stream()
+                .map(carproblemMapper::carproblemViewDto)
+                .collect(Collectors.toList());
     }
 }

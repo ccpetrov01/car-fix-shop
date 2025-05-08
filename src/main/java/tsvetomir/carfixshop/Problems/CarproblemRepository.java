@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CarproblemRepository extends JpaRepository<Carproblem,Integer> {
 
-    List<Carproblem> findByPartsPriceGreaterThan500OrderedByPriceAscNative();
+    List<Carproblem> findByPartsPriceOrderedByPriceAscNative(Integer price);
 }
