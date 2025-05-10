@@ -16,13 +16,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<String> handleDataIntegrityViolationException(DataIntegrityViolationException ex) {
-        String errorMessage = "An error occurred while processing your request.";
         String detailedMessage = ex.getMostSpecificCause().getMessage();
 
-        if (detailedMessage.contains("email")) {
-            errorMessage = "The email you entered is already in use. Please try a different email address.";
-        } else if (detailedMessage.contains("phonenumber")) {
-            errorMessage = "The phone number you entered is already in use. Please try a different phone number.";
+        String violatedField = extractFieldFromMessage(detailedMessage);
+
+        String errorMessage;
+        if (violatedField != null) {
+            errorMessage = String.format("The value for '%s' already exists or violates a constraint. Please enter a different one.", violatedField);
+        } else {
+            errorMessage = "A data integrity violation occurred. Please check your input.";
         }
 
         return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
@@ -50,4 +52,23 @@ public class GlobalExceptionHandler {
                 .body(ex.getMessage());
 
     }
+
+    private String extractFieldFromMessage(String message) {
+        if (message == null) return null;
+        if (message.contains("constraint")) {
+            int start = message.indexOf("constraint \"") + 12;
+            int end = message.indexOf("\"", start);
+            if (start > 0 && end > start) {
+                String constraint = message.substring(start, end);
+                if (constraint.contains("_")) {
+                    String[] parts = constraint.split("_");
+                    return parts.length > 1 ? parts[1] : constraint;
+                }
+                return constraint;
+            }
+        }
+
+        return null;
+    }
+
 }

@@ -1,6 +1,9 @@
 package tsvetomir.carfixshop.Problems;
 
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +23,22 @@ public class CarproblemController {
         this.carproblemMapper = carproblemMapper;
     }
 
-
+    @Operation(summary = "Add a new CarProblem")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "CarProblem successfully added"),
+            @ApiResponse(responseCode = "400", description = "Validation failed or bad request")
+    })
     @PostMapping("/add")
     public void addNewCarProblem(@RequestBody @Valid CarproblemDto carproblemDto)
     {
         Carproblem carproblem = carproblemMapper.toCarproblemDto(carproblemDto);
         carproblemService.addNewCarProblem(carproblem);
     }
-
+    @Operation(summary = "Add a new CarProblems")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "CarProblems successfully added"),
+            @ApiResponse(responseCode = "400", description = "Validation failed or bad request")
+    })
     @PostMapping("/addAll")
     public void addAllNewCarProblems(@RequestBody @Valid List<CarproblemDto> carproblemDto){
         List<Carproblem> carproblem = carproblemMapper.toCarproblemDtoList(carproblemDto);
