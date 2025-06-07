@@ -6,6 +6,6 @@ import java.util.Optional;
 
 public interface CardetailsRepository extends JpaRepository<CarDetails,Integer> {
 
-    Optional<CarDetails> findByModel(String model);
-    Optional<CarDetails> findByYearOfPub(Integer YearOfPub);
+    Optional<CarDetails> findByModel(String Model);
+    Optional<CarDetails> findByYearofpub(Integer yearofpub);
 }

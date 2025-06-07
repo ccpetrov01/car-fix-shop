@@ -44,7 +44,7 @@ public class CarproblemService {
     }
 
     public List<Carproblem> findByPartsPriceOrderedByPriceAscNative(Integer price) {
-        List<Carproblem> result = carproblemRepository.findByPartsPriceOrderedByPriceAscNative(price);
+        List<Carproblem> result = carproblemRepository.findByPartsPriceOrderByPartsPriceAsc(price);
 
         if (result.isEmpty()) {
             throw new NoSuchElementException("No car problems found with price greater than:" + price);

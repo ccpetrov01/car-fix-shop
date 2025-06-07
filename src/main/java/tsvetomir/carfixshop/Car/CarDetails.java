@@ -28,12 +28,12 @@ public class CarDetails {
     )
     private Integer id;
     @NotBlank(message = "model of car cannot be blank")
-    private String Model;
+    private String model;
     @NotBlank(message = "color of car cannot be blank")
-    private String Color;
-    @NotBlank(message = "registratio number of car cannot be blank")
+    private String color;
+    @NotBlank(message = "registration number of car cannot be blank")
     @NotNull
-    private String Regnumber;
+    private String regnumber;
     @NotBlank(message = "year of publication of car cannot be blank")
     @NotNull
     private Integer yearofpub;

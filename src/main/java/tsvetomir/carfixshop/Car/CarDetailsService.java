@@ -47,7 +47,7 @@ public class CarDetailsService {
     }
 
     public CarDetails findByYearOfPub(Integer yop){
-        return cardetailsRepository.findByYearOfPub(yop)
+        return cardetailsRepository.findByYearofpub(yop)
                 .orElseThrow(() -> new NoSuchElementException("There is no car with this year of publication: " + yop));
     }
 }
